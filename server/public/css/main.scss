@@ -1,0 +1,1426 @@
+// -----------------------------------------------------------------------------
+// IMPORTS, GLOBAL VARIABLES
+// -----------------------------------------------------------------------------
+
+// @import 'bourbon/bourbon';
+@import "reset";
+@import "mixins";
+@import "colors";
+@import "typography";
+@import "grid-settings";
+@import "josef";
+
+@import "ads";
+
+@import "../node_modules/react-select/dist/react-select.css";
+
+$image-assets: "../images";
+$cachebuster: random(1000000);
+
+// -----------------------------------------------------------------------------
+// LAYOUT GRID
+// -----------------------------------------------------------------------------
+
+// temp Bourbon grid settings
+$fg-column: 36px; // base column width, converted to % by Bourbon
+$fg-gutter: 6px; // base gutter width, converted to % by Bourbon
+$fg-max-columns: 23; // number of columns, used by Bourbon
+$max-width: 75em; // 1200/16;
+$navbar-height-offset: 40px; // temp override
+
+// -----------------------------------------------------------------------------
+// GLOBAL STYLES
+// -----------------------------------------------------------------------------
+
+@include grid(content); // Apply the grid to items with a class of 'content'.
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%; // 16
+  @include breakpoint-min(md) {
+    font-size: 112.5%; // 18/16
+  }
+}
+
+body {
+  background-color: $page-bg-color;
+  color: $text-color;
+  font-family: $fonts-serif;
+  line-height: $line-height-base;
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    color: $text-color-retina;
+  }
+}
+
+article {
+  a {
+    transition: 0.2s;
+    color: #0964a9;
+    text-decoration: none;
+    border-bottom: 1px solid rgba($link-color, 0);
+
+    &:focus,
+    &:hover {
+      border-bottom: 1px solid rgba($link-color, 0.6);
+    }
+  }
+
+  cite,
+  em {
+    font-style: italic;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  abbr {
+    text-decoration: none;
+  }
+
+  hr {
+    border: $border;
+    border-width: 1px 0 0;
+    margin: $scale-5 0;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  .article-body,
+  .article-footer {
+    margin-left: auto;
+
+    margin-right: auto;
+
+    @include breakpoint-min(md) {
+      width: colspan(6, 8);
+    }
+
+    @include breakpoint-min(lg) {
+      width: colspan(8, 12);
+    }
+    @media screen and (max-width: 1025px){
+        width: 100%;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// TITLE STYLES
+// -----------------------------------------------------------------------------
+
+.title-set {
+  text-align: center;
+  margin-top: $scale-12;
+
+  @include breakpoint-min(sm) {
+    margin-top: $scale-13;
+  }
+
+  @include breakpoint-min(md) {
+  }
+
+  @include breakpoint-min(lg) {
+    padding: 0 (colspan(1, 12) + colspan(g, 12));
+  }
+}
+
+.hed {
+  font-size: $scale-9;
+  font-weight: bold;
+  line-height: 1.3;
+
+  @include breakpoint-min(md) {
+    font-size: $scale-10;
+    line-height: 1.2;
+  }
+
+  @include breakpoint-min(lg) {
+    font-size: $scale-11;
+  }
+}
+
+.dek {
+  font-family: $fonts-sans;
+  margin: 1em 0;
+
+  @include breakpoint-min(md) {
+    font-size: $scale-7;
+  }
+}
+
+.byline {
+  display: block;
+  font-family: $fonts-sans;
+  color: $text-color-low-contrast;
+  margin-top: 1em;
+
+  a {
+    font-weight: bold;
+    color: inherit;
+    &:hover,
+    &:focus {
+      color: $link-color;
+    }
+  }
+}
+
+.dateline {
+  display: block;
+  font-family: $fonts-sans;
+  color: $text-color-low-contrast;
+  // font-style: italic;
+  margin-bottom: 1em;
+}
+
+.prefab {
+  font-size: $scale-5;
+  color: $pp-blue;
+  font-family: $fonts-sans;
+  padding: 0.5em;
+  background-color: $bg-low-contrast;
+  border: none;
+  border-radius: 0.25em;
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    color: white;
+    background-color: $link-color;
+  }
+  &.current,
+  &.current:hover,
+  &.current:focus {
+    cursor: default;
+    color: white;
+    background-color: $pp-blue;
+  }
+}
+
+.all-link {
+  display: block;
+  margin: 1em auto 1em auto;
+  width: 30%;
+  text-align: center;
+}
+
+.flexy {
+  display: flex;
+  margin: auto;
+  max-width: 590px;
+  @include breakpoint-max(sm) {
+    flex-direction: column;
+  }
+
+  .third {
+    // width: 33.3%;
+    padding: 0.25em 0.9em;
+    font-family: $fonts-sans;
+    font-weight: 600;
+    border-right: solid 1px;
+    text-align: center;
+  }
+
+  .third:last-child {
+    border: none;
+  }
+
+  .third h3 {
+    font-weight: 500;
+  }
+
+  .quarter {
+    width: 25%;
+    @include breakpoint-max(sm) {
+      width: 80%;
+      margin: auto;
+    }
+    @media screen and (max-width: 480px) {
+      width: 100%;
+    }
+  }
+
+  .half {
+    width: 50%;
+    padding: 0.25em;
+  }
+}
+
+.persona-info {
+  font-size: .59em;
+  text-align: left;
+  @include breakpoint-max(sm) {
+    margin-left: 20px;
+  }
+  @media screen and (max-width: 800px){
+    font-size: 13px;
+  }
+
+  p strong {
+    font-weight: 500;
+  }
+}
+
+.persona {
+    padding: .75em;
+    background: #f0efee;
+    transition: all 0.10s ease-in-out;
+    -webkit-transition: all 0.10s ease-in-out;
+    -moz-transition: all 0.10s ease-in-out;
+    -o-transition: all 0.10s ease-in-out;
+    display: inline-block;
+    height: 230px;
+    margin: 10px 10px 0px 0px;
+    border-radius: 5px;
+    border: 1px solid #cecece;
+    cursor:pointer;
+    max-width:100%;
+    @include breakpoint-max(sm) {
+      padding: 10px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+}
+
+.persona:hover {
+  background:#dddcdb
+}
+
+
+#man-65 {
+  background: url("../images/72-man.png") top left no-repeat;
+  background-size: 100%;
+}
+
+#woman-40 {
+   background: url("../images/40-woman.png") top left no-repeat;
+   background-size: 100%;
+}
+
+#man-20 {
+   background: url("../images/20-man.png") top left no-repeat;
+   background-size: 100%;
+}
+
+#woman-32 {
+   background: url("../images/32-woman.png") top left no-repeat;
+   background-size: 100%;
+}
+
+.persona .emoji {
+  display:inline-block;
+  width:100px;
+  height: 92px;
+  max-width: 100%;
+}
+
+// media query for persona illustration sizing
+@media screen and (max-width: 37.5em){
+
+  .persona {
+    margin-right: 0px;
+  }
+
+  .persona .emoji {
+    min-width: 73px;
+    margin-left: 10px;
+    height: 63px;
+    width: 73px;
+  }
+
+  .persona-info {
+    margin-left: 22px;
+    font-size: 14px;
+  }
+
+}
+
+.trait-category {
+  color: #656565;
+}
+
+.feltrons {
+  margin: 2em auto;
+  padding: 0.7em 1em;
+  background-color: #F2F2F2;
+  // border-radius: 5px;
+  width: 100%;
+  //width: 86%; //turn on when showing static feltron
+  font-family: $fonts-sans;
+
+  @include breakpoint-min(lg) {
+    // width: 80%;
+  }
+  @include breakpoint-max(sm) {
+    width: 80%;
+  }
+  @media screen and (max-width: 350px) {
+    width: 90%;
+  }
+  .feltron {
+    font-size: 32px; /* we should incorporate the newsapps-styles stuff rather than faking it */
+  }
+  p {
+    font-size: 0.9em;
+    // color: #999;
+    font-weight: normal;
+  }
+  .ads-today-count {
+    p {
+      font-size: 0.6em;
+    }
+    p strong {
+      font-size: 2em;
+    }
+  }
+
+  .top-feltrons-container {
+    display: flex;
+    justify-content: center;
+    @include breakpoint-max(sm) {
+      flex-direction: column;
+    }
+    .top-feltrons {
+      padding: 5px 10px;
+      border-right: solid 1px #d2d2d2;
+      text-align: center;
+      @include breakpoint-max(sm) {
+        border-bottom: solid 1px #d2d2d2;
+        border-right: none;
+        width: 100%;
+        padding: 15px 5px;
+      }
+      #adstoday {
+        max-height: 55px;
+        position: relative; 
+      }
+    }
+    .top-feltrons:last-child {
+      border-right: none;
+      border-bottom: none;
+      padding-right: 0px;
+    }
+    h3 {
+      font-size: 0.8em;
+      margin-bottom: 3px;
+      // font-weight: 500;
+    }
+    .top-target p {
+      font-weight: 600;
+    }
+    
+    @media screen and (max-width: 37.5em) {
+      .top-feltrons #adstoday {
+        position: relative; 
+        left: 0;
+      }
+    }
+  }
+}
+
+
+
+#graphic {
+  input[type="number"] {
+    width: 3em;
+    height: 17px;
+    @media screen and (max-width: 1000px) {
+      height: 12px;
+    }
+    @media screen and (max-width: 37.5em) {
+      height: 10px;
+    }
+  }
+  select, input, .Select-control {
+    background-color: #CCE8F8;
+    font-size: 1em;
+    // height: 35px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 6px;
+    border: none;
+
+  }
+  select, input {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 26px;
+    box-sizing: content-box;
+    @include breakpoint-max(sm) {
+      height: 1.7em;
+    }
+    @media screen and (max-width: 1000px) {
+      height: 20px;
+    }
+  }
+  .Select-value{
+    padding: 5px;
+    @include breakpoint-max(sm) {
+      height: 1.7em;
+      padding: 2px 5px;
+    }
+  }
+  .Select-value-label {
+    color: black;
+    font-weight: 300;
+  }
+
+  .Select-multi-value-wrapper {
+    display: inline-block;
+    padding: 4px 5px;
+  }
+
+  .Select-placeholder {
+    color: #000;
+    padding: 8px;
+    font-weight: 300;
+  }
+
+  .Select-value-label{
+    padding: 8px;
+    position: relative;
+  }
+
+  .Select-option, .Select-noresults {
+    font-size: 0.8em;
+  }
+  .Select-control .Select-input input {
+    min-width: 190px;
+    padding-top: 0px;
+  }
+  .Select-control {
+    text-align: left;
+    line-height: 0px;
+  }
+
+  /* all-viewport resets on the react-select autocomplete */
+
+  .Select-control, .Select-input, .Select-input input {
+    padding-top: 0;
+    padding-bottom: 0;
+    top: 0;
+  }
+  .Select-placeholder {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  /* variable sizing */
+  .Select-control, .Select-input, .Select-input input {
+    height: calc(26px - 4px); /* 4px is the sum of hte Select-multi-value-wrapper top/bottom padding */
+    @include breakpoint-max(sm) {
+      height: calc(1.7em - 4px); /* 4px is the sum of hte Select-multi-value-wrapper top/bottom padding */
+    }
+    @media screen and (max-width: 990px) {
+      height: 20px;
+    }
+
+  }
+  .Select-value-label, .Select-value {
+    height: 26px;
+    line-height: 26px;
+    padding-top: 0;
+    padding-bottom: 0;
+    top: 1px;
+    @include breakpoint-max(sm) {
+      height: 1.7em;
+      line-height: 1.7em;
+      }
+    @media screen and (max-width: 990px) {
+      height: 20px;
+      line-height: 20px;
+    }
+  }
+  .Select-placeholder {
+    line-height: calc(26px - 4px);
+    height: calc(26px - 4px);
+    @include breakpoint-max(sm) {
+      line-height: calc(1.7em - 2px);
+      height: calc(1.7em - 2px);
+
+    }
+    @media screen and (max-width: 990px) {
+      line-height: calc(20px - 2px);
+      height: calc(20px - 2px);
+      }
+  }
+  .Select-multi-value-wrapper {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    @media screen and (max-width: 990px) {
+      line-height: 1px;
+      height: 1px;
+      width: 20vw;
+      }
+    @include breakpoint-max(sm) {
+      line-height: 1px;
+      height: 1px;
+    }
+    @media screen and (max-width: 600px) {
+      width: 67vw;
+    }
+
+  }
+
+}
+.political-ratio svg text {
+  font-weight: normal;
+}
+.political-ratio svg text.annotation-count {
+  font-weight: bold;
+}
+
+.political-ratio {
+  border-right: solid 1px #6b6b6b;
+  width: 30%;
+  #adstoday {
+    height: 56px;
+  }
+  svg {
+    margin-top: -5px;
+  }
+}
+
+.top-target {
+  width: 40%;
+  @include breakpoint-max(sm) {
+    width: 100%;
+  }
+}
+
+.ads-collected {
+  width: 30%;
+}
+
+#race-selector:focus {
+  background-color: red;
+}
+
+.selectorsAndPersonae {
+  margin: 1em 0;
+  font-family: $fonts-sans;
+
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.facebook-pac-ads {
+  .glad-you-here {
+      // max-width: 600px; // removed by JBM 7/6/2018 in order to make this take up full width when mixed in with the ads.
+      // margin: 40px auto; // removed by AJL 7/12/2018 to format inline with ads.
+      max-width: 500px;
+      border: solid 1px rgb(221, 223, 226);
+      padding: 40px;
+      border-radius: 4px;
+      background: white;
+      margin: 12px 20px;
+      @media screen and (max-width: 320px) {
+        margin: 0;
+        padding: 20px
+      }
+
+    > div {
+      // float:left;
+    }
+    div:first-child {
+      @include breakpoint-max(sm) {
+        width:130px;
+      }
+      width:32%;
+      min-width: 110px;
+      margin-right:5px
+
+    }
+    div:last-child {
+      margin-bottom:50px;
+      @include breakpoint-max(sm) {
+        width:100%;
+        text-align: left;
+        margin-bottom: 0px;
+      }
+    }
+    h2 {
+      font-family: $fonts-serif;
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-bottom: 5px;
+      line-height: 1.3em;
+    }
+    h4 {
+      font-size: 1.1em;
+      font-family: $fonts-sans;
+      margin: 12px 0;
+    }
+
+    .wave {
+      margin-bottom: 15px;
+      height: 127px;
+      background-image: url("../images/hand-wave.png");
+      background-size: 145px;
+    }
+
+    p {
+      font-family: $fonts-serif;
+      font-size: 1.1em;
+      margin-bottom: 35px;
+      line-height: 1.4;
+      @media screen and (max-width: 320px) {
+        margin-bottom: 25px;
+      }
+    }
+    img {
+      max-width: 100px;
+      margin: auto;
+    }
+    a {
+      font-family: $fonts-sans;
+      padding:6px 10px 4px;
+      background: #196aa7;
+      color:white;
+      border-radius: 5px;
+      font-size:1em;
+      margin-top:10px;
+      // font-weight: 600
+    }
+  }
+}
+
+
+.selectorsOnly {
+  margin: 2.5em 0 1em;
+  min-height: 95px;
+  @include breakpoint-max(lg) {
+    min-height: 75px;
+  }
+  @include breakpoint-max(sm) {
+    min-height: 165px;
+  }
+
+  @media screen and (max-width: 330px) {
+    min-height: 192px;
+  }
+}
+
+.personaIntro {
+  font-size: .9em;
+}
+
+.race-note {
+    font-size: .7em;
+    margin: 0px auto 20px;
+    font-style:italic;
+    max-width: 620px;
+
+    p {
+      line-height: 1.5;
+    }
+}
+
+#sticky_nav {
+  text-align: center;
+  z-index: 5;
+  position: absolute;
+  width: 100%;
+  left: 0px;
+  background: #fff;
+}
+
+#sticky_nav.sticky {
+  position: fixed;
+  top:0px;
+  -webkit-box-shadow: 2px 1px 41px -5px rgba(158,158,158,1);
+  -moz-box-shadow: 2px 1px 41px -5px rgba(158,158,158,1);
+  box-shadow: 2px 1px 41px -5px rgba(158,158,158,1);
+  padding: 15px 0;
+}
+
+#sticky-first-line {
+  max-width: 75%;
+  width:890px;
+  margin:auto;
+  line-height: 2.2;
+  font-weight: 500;
+  padding: 5px 0px;
+  font-size:.9em;
+      transition: all 0.20s ease-in-out;
+  -webkit-transition: all 0.20s ease-in-out;
+  -moz-transition: all 0.20s ease-in-out;
+  -o-transition: all 0.20s ease-in-out;
+
+  .mobile-break {
+    display: inline;
+    #age-field {
+      display: inline;
+      text-align: left;
+    }
+
+    @include breakpoint-max(sm) {
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      select {
+        margin-bottom: 10px;
+      }
+      .select-container {
+        margin-bottom: 15px;
+      }
+    }
+    .mobile-selectors {
+      @include breakpoint-max(sm) {
+        display: none;
+      }
+    }
+  }
+  @include breakpoint-max(lg) {
+    font-size:.7em;
+  }
+  @media screen and (max-width: 1000px) {
+    font-size:.7em;
+    line-height: 2.4em;
+    max-width: 100%;
+    padding: 0 45px;
+  }
+  @include breakpoint-max(sm) {
+    width: 70%;
+    padding: 0;
+  }
+  @media screen and (max-width: 480px) {
+    width: 80%;
+  }
+}
+
+.select-container, .Select-multi-value-wrapper {
+  @include breakpoint-max(sm) {
+    // max-width: 150px !important;
+  }
+}
+
+#sticky_nav.sticky p {
+  font-size:.75em;
+}
+
+// -----------------------------------------------------------------------------
+// MEDIA QUERIES FOR STICKY NAV
+// -----------------------------------------------------------------------------
+@media (max-width: 800px) {
+  #sticky_nav.sticky p {
+    font-size: .7em;
+  }
+}
+@media (max-width: 480px) {
+  #sticky_nav.sticky {
+    position: absolute;
+    top: inherit;
+    box-shadow: none;
+    padding: 0;
+  }
+}
+// -----------------------------------------------------------------------------
+// FACEBOOK AD BROWSER FORM STYLES
+// -----------------------------------------------------------------------------
+
+#facebook-pac-browser {
+  font-family: $fonts-sans;
+  font-size: $scale-5;
+  margin: colspan(g, 4) auto;
+  display:inline-block;
+  width: 100%;
+  @include clearfix;
+  @include breakpoint-min(sm) {
+    // width: colspan(4, 6);
+    // margin: colspan(g, 6) auto;
+  }
+  @include breakpoint-min(md) {
+    // width: colspan(6, 8);
+    // margin: colspan(g, 8) auto;
+  }
+  @include breakpoint-min(lg) {
+    text-align: center;
+    width: colspan(8, 8);
+    // margin-left: -(colspan(2, 8) + colspan(g, 8)); //removed to fix overflow
+  }
+  .prefabs {
+    text-align: center;
+    @include breakpoint-min(lg) {
+      width: colspan(8, 12);
+      margin-left: colspan(2, 12) + colspan(g, 12);
+    }
+    legend {
+      margin-bottom: 0.5em;
+      text-align: center;
+      width: 100%;
+    }
+    li {
+      display: inline-block;
+      line-height: 2.75;
+      margin-right: 0.3em;
+    }
+  }
+
+  input[type="search"] {
+    -webkit-appearance: textfield;
+    width: 100%;
+    font-size: $scale-7;
+    background-color: $bg-low-contrast;
+    padding: 0.9em;
+    margin: colspan(g, 4) 0;
+    border: $border;
+    box-sizing: inherit;
+    display: flex;
+    justify-content: center;
+    @include breakpoint-max(lg) {
+      margin: 1.5em auto;
+      width: 80%;
+    }
+    @include breakpoint-min(md) {
+      // margin: colspan(g, 6) 0;
+    }
+    @include breakpoint-max(md) {
+      margin: 1.5em auto;
+      max-width: 600px;
+
+
+    }
+    @include breakpoint-min(lg) {
+      display: block;
+      text-align: center;
+      width: colspan(6, 12);
+      margin: colspan(g, 12) 0;
+      margin-left: colspan(3, 12) + colspan(g, 12);
+      // margin-left: auto;
+      // margin-right: auto;
+    }
+  }
+  ::-webkit-input-placeholder {
+    color: $border-color;
+  }
+  ::-moz-placeholder {
+    color: $border-color;
+  }
+  :-ms-input-placeholder {
+    color: $border-color;
+  }
+  :-moz-placeholder {
+    color: $border-color;
+  }
+  .filters legend {
+    display: block;
+    width: 100%;
+    font-size: $scale-6;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding-bottom: 0.5em;
+    margin: 1em 0;
+    // background-color: #e9ebee;
+    // border-radius: 4px;
+    border-bottom: 1px solid $border-color;
+  }
+  .filter {
+    position: relative;
+    text-align: left;
+    color: $pp-blue;
+    margin: 0 auto 1em;
+    cursor: pointer;
+    z-index: 0;
+    @media screen and (max-width: 960px){
+      width: 80%;
+    }
+    @media screen and (max-width: 37.5em){
+      width: 80%;
+    }
+    @include breakpoint-min(lg) {
+      float: left;
+      width: colspan(4, 12);
+      margin-bottom: 0;
+      margin-right: colspan(g, 12);
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &.active {
+      display: block;
+      .filter-title {
+        cursor: pointer;
+        z-index: 1001;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        box-shadow: 0 0 2em rgba($pp-blue, 0.4);
+        &:after {
+          content: " ▲";
+        }
+      }
+      .filter-options {
+        cursor: pointer;
+        display: block;
+      }
+    }
+  }
+  .filter-title {
+    position: relative;
+    // font-size: $scale-6;
+    background-color: $bg-low-contrast;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    &:after {
+      position: absolute;
+      content: " ▼";
+      font-size: 0.75em;
+      bottom: 0.85em;
+      right: 1em;
+      margin: auto;
+    }
+  }
+  .filter-options {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    max-height: 16.5em;
+    overflow: scroll;
+    background-color: $bg-low-contrast;
+    border-top: 1px solid $border-color;
+    border-bottom-left-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
+    box-shadow: 0 0 2em rgba($pp-blue, 0.4);
+    @include breakpoint-min(sm) {
+      max-height: 26.25em;
+    }
+    li {
+      position: relative;
+      text-align: left;
+      border-bottom: 1px solid $border-color;
+      &:last-child {
+        border: none;
+      }
+    }
+    input[type="checkbox"] {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 1em;
+      margin: auto;
+      &:checked + label {
+        color: white;
+        background-color: $pp-blue;
+      }
+    }
+    label {
+      display: block;
+      text-align: left;
+      padding: 0.5em 0.5em 0.5em 2.5em;
+      &:hover,
+      &:focus {
+        color: white;
+        background-color: $link-color;
+      }
+    }
+  }
+  select {
+    font-size: $scale-6;
+    width: 100%;
+    margin: 1em 0;
+  }
+}
+
+.why-these-ads {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #6d6d6d;
+  font-family: $fonts-sans;
+}
+
+#toggle-topic-search {
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 6px 10px 5px;
+  color: #196aa7;
+  border-radius: 5px;
+  border: none;
+  margin-left: 5px;
+  font-family: $fonts-sans;
+}
+
+// -----------------------------------------------------------------------------
+// PAGINATION NAV
+// -----------------------------------------------------------------------------
+
+.pagination {
+  display: block;
+  text-align: center;
+  &:first-child {
+    margin-bottom: 2em;
+  }
+  &:last-child {
+    margin-top: 2em;
+  }
+  li {
+    display: inline-block;
+    margin-bottom: 0.5em;
+    &.current {
+      color: white;
+      background-color: #0F3F63;
+      padding: 0.5em 1em;
+      border-radius: 0.25em;
+    }
+  }
+  li a {
+    display: block;
+    color: #0F3F63;
+    // background-color: white;
+    padding: 0.5em 1em;
+    border: $border;
+    border-radius: 0.25em;
+    &:hover,
+    &:focus {
+      color: white;
+      background-color: #196AA7;
+      border: 1px solid #196AA7;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// FACEBOOK AD STYLES (see also ads.scss)
+// -----------------------------------------------------------------------------
+
+.facebook-pac-ads {
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: left;
+  padding: colspan(g, 4) 12px;
+  // background-color: #e9ebee;
+  background-color: $bg-low-contrast;
+  @include full-width;
+  @include breakpoint-min(sm) {
+    padding-top: colspan(g, 6);
+    padding-bottom: colspan(g, 6);
+  }
+  @include breakpoint-min(md) {
+    padding-top: colspan(1, 8);
+    padding-bottom: colspan(1, 8);
+  }
+  @include breakpoint-min(lg) {
+    padding-top: colspan(g, 8);
+    padding-bottom: colspan(g, 8);
+  }
+  a {
+    color: rgb(54, 88, 153);
+    border: none;
+    &:hover,
+    &:focus {
+      border: none;
+    }
+  }
+  p + p {
+    margin-top: 6px;
+  }
+  .no_ads {
+    text-align: center;
+    font-size: 16px;
+    padding: 16px;
+    font-weight: bold;
+  }
+
+}
+
+#graphic {
+  margin-bottom: 50px;
+  .bottom-guff {
+    padding-top: colspan(g, 16);
+    padding-bottom: colspan(g, 16);
+    h3 {
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+    }
+    .collapse-handle {
+      padding: 0.1em 0.45em;
+      margin-left: 0.25em;
+      border: 1px solid #d8d6d3;
+      border-radius: 0.25em;
+      color: white;
+      background-color: #196AA7;
+      border: 1px solid #196AA7;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// MAIN HEADER + NAV
+// -----------------------------------------------------------------------------
+
+header[role="banner"] {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: $navbar-height-offset;
+  z-index: 1000;
+  background-color: $page-bg-color;
+  border-bottom: 1px solid lighten($text-color, 85%);
+  @include breakpoint-min(xl) {
+    background-color: transparent;
+    border-bottom: none;
+  }
+}
+
+header[role="banner"] > h1 {
+  display: block;
+  width: 150px;
+  height: inherit;
+  float: left;
+  margin-left: 0.25em;
+  @include breakpoint-min(sm) {
+    margin-left: 0.33em;
+  }
+  a {
+    display: block;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    height: inherit;
+    background: url("#{$image-assets}/pp-logo-dark.svg") 0 50% no-repeat;
+    background-size: contain;
+  }
+}
+
+header[role="banner"] > h2 {
+  display: none;
+  float: left;
+  margin-top: 12px;
+  margin-left: 10px;
+  padding-top: 2px;
+  padding-left: 10px;
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+  font-family: $fonts-sans;
+  font-size: 0.875rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  @include breakpoint-min(sm) {
+    display: inline-block;
+  }
+  .waypoint-header-exited & {
+    border-left: 1px solid rgba(0, 0, 0, 0.8);
+  }
+}
+
+header[role="banner"] > h2 a {
+  text-decoration: none;
+  color: black;
+}
+
+header[role="banner"] > h4 {
+  float: left;
+  font-family: $fonts-sans;
+}
+
+header[role="banner"] > h4.project-name a {
+  text-decoration: none;
+  color: black;
+  font-size: .8125rem;
+  padding: .35rem .5rem .25rem;
+  margin-left: 7px;
+  position: relative;
+  text-transform: uppercase;
+  border-left: solid 1px;
+  top: 0.4rem;
+  vertical-align: bottom;
+  @media screen and (max-width: 767px) {
+    top: 0.5rem;
+  }
+  @media screen and (max-width: 560px) {
+    display: none;
+  }
+}
+
+header[role="banner"] nav {
+  position: absolute;
+  top: 0;
+  right: 0.5em;
+  font-family: $fonts-sans;
+  font-size: 0.875em; // 14/16
+  -webkit-font-smoothing: antialiased;
+}
+
+header[role="banner"] nav ul {
+  list-style: none;
+}
+
+header[role="banner"] nav ul li {
+  padding-bottom: inherit; // override global
+}
+
+header[role="banner"] nav ul li a {
+  color: $text-color;
+}
+
+header[role="banner"] nav .other-links {
+  display: none;
+  position: relative;
+  top: 0.5rem;
+  margin-right: 0.5rem;
+  @include breakpoint-min(sm) {
+    display: inline-block;
+  }
+  li {
+    display: inline-block;
+  }
+  li a {
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+    color: $text-color;
+  }
+  li a:hover,
+  li a:focus {
+    text-decoration: underline;
+  }
+}
+
+header[role="banner"] nav .social-links {
+  display: inline-block;
+  position: relative;
+  top: 0.5rem;
+  li {
+    display: inline-block;
+  }
+  li a {
+    display: block;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 26px;
+    text-decoration: none;
+  }
+  @media screen and (max-width: 440px) {
+    display: none;
+  }
+}
+
+nav .facebook a {
+  background: url("#{$image-assets}/nav-sprites-dark.svg") -1px 0 no-repeat;
+}
+
+nav .twitter a {
+  background: url("#{$image-assets}/nav-sprites-dark.svg") 0 -50px no-repeat;
+}
+
+nav .comment a {
+  background: url("#{$image-assets}/nav-sprites-dark.svg") -2px -100px no-repeat;
+}
+
+header[role="banner"] nav .social-links li.comment a {
+  display: none;
+  @include breakpoint-min(sm) {
+    display: block;
+  }
+}
+
+header[role="banner"] nav .donate-links {
+  float: right;
+  margin-left: 0.25rem;
+  li {
+    display: inline-block;
+  }
+  li a {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0.375rem 0.5rem 0.3rem 0.5rem;
+    font-family: $fonts-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    border-radius: 0 0 0.2rem 0.2rem;
+  }
+  li a:link,
+  li a:visited {
+    background-color: $light-red;
+  }
+  li a:hover,
+  li a:focus,
+  li a:active {
+    background-color: darken($light-red, 5%);
+  }
+}
+
+/* for the signup icon */
+header[role="banner"] nav .social-links li a.nav-social-link {
+  overflow: visible;
+  width: auto;
+  text-indent: 0;
+  vertical-align: top;
+}
+.nav-social-link {
+    color: black;
+    display: block;
+    font-size: .8125rem;
+    font-weight: bold;
+    padding: .5rem;
+    padding-top: 3px;
+    text-transform: uppercase;
+    vertical-align: top;
+}
+
+.nav-social-link .icon-label {
+  margin-left:.5rem;
+  vertical-align: top;
+}
+.nav-email-item {
+  margin-left:.625rem;
+  position:relative;
+  padding-left:.625rem
+}
+.nav-email-item:after {
+  background:#333;
+  bottom:0.5em;
+  content:"";
+  left:0;
+  position:absolute;
+  top:0.35em;
+  width:1px
+}
+.mast-mini--dark .nav-email-item:after {
+  background-color:#fff
+}
+
+@supports (display: flex)
+  {
+  .fixed-supported .mast-mini--light.is-scrolling .nav-email-item:after {
+    background:#333
+  }
+  .fixed-supported .mast-mini--dark.is-scrolling .nav-email-item:after{
+    background:#fff
+  }
+}
+
+.yougovhelp {
+  p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  b {
+    font-weight: bold;
+  }
+
+  h1 {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  ol {
+    list-style-type: decimal; 
+    list-style-position: inside; 
+ 
+  }
+}

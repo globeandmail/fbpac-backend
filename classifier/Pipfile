@@ -1,0 +1,21 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+
+[packages]
+
+facebook-sdk = "*"
+numpy = "*"
+sklearn = "*"
+"bs4" = "*"
+imbalanced-learn = "*"
+"psycopg2" = "*"
+dill = "==0.2.7.1"
+click = "*"
+records = "*"
+spacy = "*"
+en-core-web-sm = {file = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.0.0/en_core_web_sm-2.0.0.tar.gz"}
+"boto3" = "*"
+"7ab5858" = {path = "./en_fbpac3label-2.0.0.tar.gz"}
