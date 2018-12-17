@@ -1,10 +1,10 @@
 version: 0.2
 
 env:
- variables:
-   IMAGE_TAG: "latest"
-   AWS_ACCOUNT_ID: "040062179569"
-   IMAGE_REPO_NAME: "facebook-ads"
+  variables:
+    IMAGE_TAG: "latest"
+    AWS_ACCOUNT_ID: "040062179569"
+    IMAGE_REPO_NAME: "facebook-ads"
 
 phases:
   pre_build:
