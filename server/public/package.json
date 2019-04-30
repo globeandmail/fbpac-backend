@@ -79,6 +79,6 @@
     "modulePaths": [
       "<rootDir>/src/"
     ],
-    "testURL": "https://projects.propublica.org/facebook-ads/"
+    "testURL": "https://fbads.theglobeandmail.com/facebook-ads/"
   }
 }

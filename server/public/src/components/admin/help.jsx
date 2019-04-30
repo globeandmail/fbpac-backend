@@ -15,8 +15,8 @@ const AdminHelp = () => (
     <p>
       If you are outside the USA, you should append your country’s language code
       to the end instead of en-US, e.g. “en-CA” or “pt-BR”, e.g.
-      <a href="https://projects.propublica.org/facebook-ads/admin?lang=en-US">
-        https://projects.propublica.org/facebook-ads/admin?lang=en-US
+      <a href="https://fbads.theglobeandmail.com/facebook-ads/admin?lang=en-US">
+        https://fbads.theglobeandmail.com/facebook-ads/admin?lang=en-US
       </a>.
     </p>
 
@@ -26,25 +26,25 @@ const AdminHelp = () => (
       for whatever’s most interesting to you: Trump, Trudeau, housing, etc.
     </p>
 
-    <p>
-      Or <b>if you're in the US</b>, click Tools -> US Politics Stuff ->{" "}
-      <a href="/facebook-ads/admin/states">
-        Links to candidate ads by state, office and congressional district
-      </a>{" "}
-      to find links to{" "}
-      <strong>Ads Targeting A State Or Mentioning a Candidate</strong>, which
-      contains all ads that either{" "}
-      <ol>
-        <li>mention a candidate in the state,</li>
-        <li>are run by a candidate in the state, or,</li>
-        <li>target that state specifically</li>
-      </ol>
-      You can also find just ads by candidates in a given party, or in a given
-      state. You can also see ads from candidates in a specific races. You can
-      see the list of candidates we know about{" "}
-      <a href="/fbpac-api/candidates">here</a>; you can edit them, delete or add
-      new ones there too. Email Jeremy if you want to add a bunch.
-    </p>
+    // <p>
+    //   Or <b>if you're in the US</b>, click Tools -> US Politics Stuff ->{" "}
+    //   <a href="/facebook-ads/admin/states">
+    //     Links to candidate ads by state, office and congressional district
+    //   </a>{" "}
+    //   to find links to{" "}
+    //   <strong>Ads Targeting A State Or Mentioning a Candidate</strong>, which
+    //   contains all ads that either{" "}
+    //   <ol>
+    //     <li>mention a candidate in the state,</li>
+    //     <li>are run by a candidate in the state, or,</li>
+    //     <li>target that state specifically</li>
+    //   </ol>
+    //   You can also find just ads by candidates in a given party, or in a given
+    //   state. You can also see ads from candidates in a specific races. You can
+    //   see the list of candidates we know about{" "}
+    //   <a href="/fbpac-api/candidates">here</a>; you can edit them, delete or add
+    //   new ones there too. Email Jeremy if you want to add a bunch.
+    // </p>
 
     <p>
       By default, we only show ads that our “classifier” algorithm believes are
@@ -73,25 +73,6 @@ const AdminHelp = () => (
       dashboard; there’s a similar grouping of ads grouped by Advertiser that
       have first appeared in the past month. This may help you find new groups
       advertising on politics.
-      <p />
-      Here are some examples:
-      <ul>
-        <li>
-          We wrote{" "}
-          <a href="https://www.propublica.org/article/democrats-facebook-likes-arizona-special-election-hiral-tipirneni">
-            a story about how Democrats’ ad targeting strategies, focusing on
-            Hiral Tipirneni
-          </a>, a candidate in a special election in Arizona, who advertised to
-          people who liked the pages of, say, Elizabeth Warren.
-        </li>
-        <li>
-          We also{" "}
-          <a href="https://twitter.com/ProPublica/status/993925750632910850">
-            reported on a candidate’s negative ads that didn’t have a disclosure
-          </a>: Rich Cordray who had bragged about running a positive campaign,
-          ran ads criticizing his opponent under the name “Ohio Primary Info.”
-        </li>
-      </ul>
     </p>
 
     <h2>What each item of metadata means</h2>
@@ -114,8 +95,8 @@ const AdminHelp = () => (
       “<strong>Parsed Targets</strong>”: shows what the database has parsed out
       of the “Targeting” info. If there’s something missing from here (and the
       Targeting info is in English), it’s a bug. Please let us know at
-      <a href="mailto:adcollector@propublica.org">
-        adcollector@propublica.org
+      <a href="mailto:politicalads@globeandmail.com">
+        politicalads@globeandmail.com
       </a>.
     </p>
 
@@ -127,8 +108,8 @@ const AdminHelp = () => (
 
     <p>
       The <strong>Political/Not Political</strong> count is the number of votes
-      from users (who vote in the extension, in the popup under the ProPublica
-      logo in the top left of your browser) as to whether the ad is political or
+      from users (who vote in the extension, in the popup under the extension icon
+      in the top left of your browser) as to whether the ad is political or
       not. This probably is not of interest, since you can judge if an ad is
       interesting yourself.
     </p>

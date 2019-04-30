@@ -61,8 +61,8 @@ class YougovHelp extends React.Component {
         </ol>
         <p>
           If you have technical difficulties with the extension, contact{" "}
-          <a href="mailto:adcollector@propublica.org">
-            adcollector@propublica.org
+          <a href="mailto:">
+            
           </a>. If you have questions about the study, contact YouGov at{" "}
           <a href="mailto:help.us@yougov.com">help.us@yougov.com</a>.
         </p>
