@@ -132,7 +132,7 @@ export class AdsUnconnected extends React.Component {
                 ? this.props.politicalProbability
                 : [70, 100]
             }
-            min={30}
+            min={0}
             marks={{
               10: "10%",
               20: "20%",
