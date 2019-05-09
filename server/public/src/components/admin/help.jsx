@@ -26,25 +26,29 @@ const AdminHelp = () => (
       for whatever’s most interesting to you: Trump, Trudeau, housing, etc.
     </p>
 
-    // <p>
-    //   Or <b>if you're in the US</b>, click Tools -> US Politics Stuff ->{" "}
-    //   <a href="/facebook-ads/admin/states">
-    //     Links to candidate ads by state, office and congressional district
-    //   </a>{" "}
-    //   to find links to{" "}
-    //   <strong>Ads Targeting A State Or Mentioning a Candidate</strong>, which
-    //   contains all ads that either{" "}
-    //   <ol>
-    //     <li>mention a candidate in the state,</li>
-    //     <li>are run by a candidate in the state, or,</li>
-    //     <li>target that state specifically</li>
-    //   </ol>
-    //   You can also find just ads by candidates in a given party, or in a given
-    //   state. You can also see ads from candidates in a specific races. You can
-    //   see the list of candidates we know about{" "}
-    //   <a href="/fbpac-api/candidates">here</a>; you can edit them, delete or add
-    //   new ones there too. Email Jeremy if you want to add a bunch.
-    // </p>
+    {/*
+
+      <p>
+        Or <b>if you're in the US</b>, click Tools -> US Politics Stuff ->{" "}
+        <a href="/facebook-ads/admin/states">
+          Links to candidate ads by state, office and congressional district
+        </a>{" "}
+        to find links to{" "}
+        <strong>Ads Targeting A State Or Mentioning a Candidate</strong>, which
+        contains all ads that either{" "}
+        <ol>
+          <li>mention a candidate in the state,</li>
+          <li>are run by a candidate in the state, or,</li>
+          <li>target that state specifically</li>
+        </ol>
+        You can also find just ads by candidates in a given party, or in a given
+        state. You can also see ads from candidates in a specific races. You can
+        see the list of candidates we know about{" "}
+        <a href="/fbpac-api/candidates">here</a>; you can edit them, delete or add
+        new ones there too. Email Jeremy if you want to add a bunch.
+      </p>
+
+    */}
 
     <p>
       By default, we only show ads that our “classifier” algorithm believes are
