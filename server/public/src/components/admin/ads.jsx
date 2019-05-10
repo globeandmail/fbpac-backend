@@ -144,7 +144,7 @@ export class AdsUnconnected extends React.Component {
               80: "80%",
               90: "90%"
             }}
-            onChange={this.props.onSliderChange}
+            onAfterChange={this.props.onSliderChange}
           />
         </div>
         <div className="more-selectors" style={{ display: "none" }}>
