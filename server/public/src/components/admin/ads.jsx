@@ -122,7 +122,7 @@ export class AdsUnconnected extends React.Component {
           <label htmlFor="range-1a">Political Likelihood:</label>
           <Range
             defaultValue={
-              his.props.politicalProbability &&
+              this.props.politicalProbability &&
               this.props.politicalProbability.length
                 ? this.props.politicalProbability
                 : [70, 100]
