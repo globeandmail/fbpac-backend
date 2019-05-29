@@ -79,21 +79,21 @@ pub fn get_message(document: &kuchiki::NodeRef) -> Result<String> {
 
 pub fn get_paid_for_by(document: &kuchiki::NodeRef) -> Option<String> {
     document_select(document, "._5pcq ._3nlk").ok()
-        .and_then(|mut elems| 
+        .and_then(|mut elems|
             elems.nth(1).and_then(
                 |elem| Some(String::new() + &elem.as_node().text_contents().to_string())
             )
-        ) 
+        )
 }
 
 // pub fn get_paid_for_by(document: &kuchiki::NodeRef) -> Result<String> {
 //     document_select(document, "._5pcq ._3nlk")
-//         .and_then(|mut elems| 
+//         .and_then(|mut elems|
 //             elems.nth(1).ok_or_else(|| "can't find Paid for by".into())
 //         .and_then(
 //                 |elem| Ok(String::new() + &elem.as_node().text_contents().to_string())
 //             )
-//         ) 
+//         )
 // }
 
 // Only available in timeline ads
@@ -422,6 +422,8 @@ impl Ad {
             .and_then(move |tuple| {
                     if tuple.1.host().unwrap_or_default() != s3hostname {
                         let client = S3Client::simple(Region::UsEast1);
+                        // DON'T FORGET TO COMMENT OUT LINE BELOW
+                        println!("THIS IS A TEST: {}", S3_BUCKET_NAME.unwrap_or(DEFAULT_S3_BUCKET_NAME));
                         let req = PutObjectRequest {
                             bucket: S3_BUCKET_NAME.unwrap_or(DEFAULT_S3_BUCKET_NAME).to_string(),
                             key: tuple.1.path().trim_left_matches('/').to_string(),
@@ -602,7 +604,7 @@ pub fn get_targetedness_score(targets: Option<Value>) -> Option<i32> {
                 filter(|elem| {
                     let target : &str = elem.as_object().unwrap().get("target").unwrap().as_str().unwrap();
                     let already_present = keys_existant_so_far.contains(target);
-                    keys_existant_so_far.insert(target.clone());  
+                    keys_existant_so_far.insert(target.clone());
                     !already_present
                 });
             let targetedness : i32 = deduped_targs
@@ -623,9 +625,9 @@ pub fn get_targetedness_score(targets: Option<Value>) -> Option<i32> {
                         "MaxAge" => cmp::min((65 - segment.unwrap().parse::<i32>().unwrap() ) / 10, 1),
                         "Retargeting" => match segment.unwrap() {
                             "Near their business" => 3,
-                            "people who may be similar to their customers" => 2,   
+                            "people who may be similar to their customers" => 2,
                             _ => 0
-                        }, 
+                        },
                         "Like" => 1,
                         "State" => 1,
                         "Region" => 1,
@@ -763,7 +765,7 @@ impl<'a> NewAd<'a> {
                             targetings.push(targ);
                             Some(targetings)
                         })
-                        
+
                         ),
                     dsl::targets.eq(
                         saved_ad.targets.clone().map(|old_targets_json| {
@@ -781,7 +783,7 @@ impl<'a> NewAd<'a> {
                 ))
                 .execute(&*connection)?;
         };
-        
+
 
         Ok(saved_ad)
     }

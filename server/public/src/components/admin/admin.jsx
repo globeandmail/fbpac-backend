@@ -7,7 +7,7 @@ import GroupedAttrs from "components/admin/groupedattrs.jsx";
 import AdminTools from "components/admin/tools.jsx";
 import Summary from "components/admin/summary.jsx";
 import AdminHelp from "components/admin/help.jsx";
-import StatesDistricts from "components/admin/states_districts.jsx";
+// import StatesDistricts from "components/admin/states_districts.jsx";
 import { URL_ROOT } from "actions.js";
 
 export const LoggedInApp = () => {
@@ -41,8 +41,7 @@ export const LoggedInApp = () => {
       <Route path="/facebook-ads/admin/tools" component={AdminTools} />
       <Route path="/facebook-ads/admin/help" component={AdminHelp} />
       <Route path="/facebook-ads/admin/summary" component={Summary} />
-      <Route path="/facebook-ads/admin/states" component={StatesDistricts} />
-      <Route path="/facebook-ads/admin/by_state/:state" component={Ads} />
+      // <Route path="/facebook-ads/admin/by_state/:state" component={Ads} />
     </div>
   );
 };
