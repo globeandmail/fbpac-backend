@@ -424,6 +424,8 @@ impl Ad {
                         let client = S3Client::simple(Region::UsEast1);
                         // DON'T FORGET TO COMMENT OUT LINE BELOW
                         println!("THIS IS A TEST: {}", S3_BUCKET_NAME.unwrap_or(DEFAULT_S3_BUCKET_NAME));
+                        println!("THIS IS A TEST OF S3_BUCKET_NAME: {:?}", S3_BUCKET_NAME);
+                        println!("THIS IS A TEST OF DEFAULT_S3_BUCKET_NAME: {:?}", DEFAULT_S3_BUCKET_NAME);
                         let req = PutObjectRequest {
                             bucket: S3_BUCKET_NAME.unwrap_or(DEFAULT_S3_BUCKET_NAME).to_string(),
                             key: tuple.1.path().trim_left_matches('/').to_string(),
