@@ -4,6 +4,8 @@ FROM rust:latest
 
 ENV SHELL /bin/bash
 
+ENV S3_BUCKET_NAME "fbpac-ads-public"
+
 RUN apt-get update && \
 apt-get install -y libssl-dev \
 build-essential \
@@ -33,6 +35,7 @@ ENV HOST "0.0.0.0:8080"
 ENV RUST_LOG info
 ENV ROOT "/server/"
 ENV RUST_BACKTRACE 1
+
 # ENV AWS_ACCESS_KEY_ID "AKIAwhatever"
 # ENV AWS_SECRET_ACCESS_KEY "whatever"
 # ENV S3_BUCKET_NAME "pp-facebook-ads"
