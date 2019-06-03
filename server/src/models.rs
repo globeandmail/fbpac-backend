@@ -403,7 +403,11 @@ impl Ad {
             .filter(move |u| {
                 info!("testing {:?}", u.host());
                 match u.host() {
-                    Some(h) => (h == s3hostname2 || h.ends_with("fbcdn.net")),
+                    // when we changed from pp-facebook-ads to the Globe's S3 bucket, this started
+                    // running roughshod over old ad code and deleting images that were still stored
+                    // at ProPublica's bucket, so adding PP to the matching condition
+                    // old code was: // Some(h) => (h == s3hostname2 || h.ends_with("fbcdn.net")),
+                    Some(h) => (h == s3hostname2 || h.ends_with("fbcdn.net") || h == "pp-facebook-ads.s3.amazonaws.com".to_owned()),
                     None => false
                 }
             })

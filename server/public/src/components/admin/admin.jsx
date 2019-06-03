@@ -41,7 +41,7 @@ export const LoggedInApp = () => {
       <Route path="/facebook-ads/admin/tools" component={AdminTools} />
       <Route path="/facebook-ads/admin/help" component={AdminHelp} />
       <Route path="/facebook-ads/admin/summary" component={Summary} />
-      // <Route path="/facebook-ads/admin/by_state/:state" component={Ads} />
+      {/* <Route path="/facebook-ads/admin/by_state/:state" component={Ads} /> */}
     </div>
   );
 };

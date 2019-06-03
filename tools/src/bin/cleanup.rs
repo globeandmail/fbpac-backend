@@ -18,6 +18,9 @@ use server::start_logging;
 use std::env;
 use url::Url;
 
+const DEFAULT_S3_BUCKET_NAME : &'static str = "pp-facebook-ads";
+const S3_BUCKET_NAME: Option<&'static str> = option_env!("S3_BUCKET_NAME");
+
 fn cleanup(ad: &mut Ad) -> bool {
     let document = kuchiki::parse_html().one(ad.html.clone());
     let mut ret = false;
@@ -38,7 +41,7 @@ fn cleanup(ad: &mut Ad) -> bool {
                 let client = S3Client::simple(Region::UsEast1);
                 let res = client
                     .delete_object(&DeleteObjectRequest {
-                        bucket: "pp-facebook-ads".to_string(),
+                        bucket: S3_BUCKET_NAME.unwrap_or(DEFAULT_S3_BUCKET_NAME).to_string(),
                         key: url.path().trim_left_matches('/').to_string(),
                         ..DeleteObjectRequest::default()
                     })
