@@ -39,7 +39,7 @@ ENV RUST_BACKTRACE 1
 # ENV AWS_ACCESS_KEY_ID "AKIAwhatever"
 # ENV AWS_SECRET_ACCESS_KEY "whatever"
 # ENV S3_BUCKET_NAME "pp-facebook-ads"
-# S3_BUCKET_NAME is where to write images received from the plugin to. AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be ablle to write to it.
+# S3_BUCKET_NAME is where to write images received from the plugin to. AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be able to write to it.
 
 ### ENV DATABASE_URL "postgresql:///facebook_ads"
 # change this to fit your URL
