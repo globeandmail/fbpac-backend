@@ -8,23 +8,25 @@ This is the Rust backend (website, ad receiver) for the [Facebook Political Ad C
 There's two ways of running this: the easy, Docker way, or the hard way.
 
 
-###### The Docker way
+##### The Docker way
 
 For development and evaluation purposes, you can easily set up the FBPAC backend environment using Docker. You'll need to clone both this repo and the [fbpac-api](https://github.com/globeandmail/fbpac-api) repos, then run `docker-compose -f docker-compose/docker-compose.yml up` in the root of this directory.
 
 ```sh
 cd ..
-git clone https://github.com/propublica/fbpac-api-public
-cd fbpac-api-public
+git clone https://github.com/globeandmail/fbpac-api
+cd fbpac-api
 bundle install
-cd ../facebook-political-ads
-docker-compose -f docker-compose/docker-compose.yml up
+cd ../fbpac-backend
+docker build .
 ```
+
+(You may need to pass an HTTP_PROXY environment variable as per [this StackOverflow issue](https://stackoverflow.com/questions/34302974/how-could-i-execute-apt-get-install-on-docker-ubuntu-contain).)
 
 Now visit `localhost:8080`; you should see the dashboard.
 
 
-###### The hard way
+##### The hard way
 
 This runs Cargo and Diesel manually.
 
