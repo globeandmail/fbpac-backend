@@ -116,43 +116,39 @@ export class AdminAdUnconnected extends React.Component {
               <td>impressions</td>
               <td>{this.props.ad.impressions}</td>
             </tr>
-
-            {this.props.ad.lang == "en-US" ? (
-              <tr>
-                <td>More ads by this advertiser</td>
-                <td>
-                  <a
-                    href={`https://www.facebook.com/politicalcontentads/?active_status=all&q=${
-                      this.props.ad.advertiser
-                    }`}
-                  >
-                    Facebook Political Ad Archive
-                  </a>{" "}
-                  |{" "}
-                  <a
-                    href={`/facebook-ads/admin?advertisers=%5B%22${
-                      this.props.ad.advertiser
-                    }%22%5D`}
-                  >
-                    FBPAC ads
-                  </a>{" "}
-                  |{" "}
-                  <a
-                    href={`/fbpac-api/ads/advertiser?advertiser=${this.props.ad
-                      .advertiser || this.props.ad.title}`}
-                  >
-                    Breakdown of Targeting Choices
-                  </a>{" "}
-                  |{" "}
-                  {this.props.ad.political_probability > 0.7 ? (
-                    <a href={`/facebook-ads/ad/${this.props.ad.id}`}>
-                      Public Permalink
-                    </a>
-                  ) : null}
-                </td>
-              </tr>
-            ) : null}
-
+            <tr>
+              <td>More ads by this advertiser</td>
+              <td>
+                <a
+                  href={`https://www.facebook.com/politicalcontentads/?active_status=all&q=${
+                    this.props.ad.advertiser
+                  }`}
+                >
+                  Facebook Political Ad Archive
+                </a>{" "}
+                |{" "}
+                <a
+                  href={`/facebook-ads/admin?advertisers=%5B%22${
+                    this.props.ad.advertiser
+                  }%22%5D`}
+                >
+                  FBPAC ads
+                </a>{" "}
+                |{" "}
+                <a
+                  href={`/fbpac-api/ads/advertiser?advertiser=${this.props.ad
+                    .advertiser || this.props.ad.title}`}
+                >
+                  Breakdown of Targeting Choices
+                </a>{" "}
+                |{" "}
+                {this.props.ad.political_probability > 0.7 ? (
+                  <a href={`/facebook-ads/ad/${this.props.ad.id}`}>
+                    Public Permalink
+                  </a>
+                ) : null}
+              </td>
+            </tr>
             <tr>
               <td colSpan="2">
                 {this.props.ad.suppressed ? (
