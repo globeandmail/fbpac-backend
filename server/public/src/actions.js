@@ -134,12 +134,14 @@ const a = type => arg => ({ type, value: arg });
 export const NEW_ENTITIES = "new_entities";
 export const NEW_ADVERTISERS = "new_advertisers";
 export const NEW_TARGETS = "new_targets";
+export const NEW_PAID_FOR_BYS = "new_paid_for_bys"
 export const NEW_STATES = "new_states";
 export const NEW_PARTIES = "new_parties";
 export const NEW_DISTRICTS = "new_districts";
 export const NEW_BY_STATE = "new_by_state"; // this is for the combined state page: ads targeted TO the state, ads mentioning or by candidates in the state
 export const newEntities = a(NEW_ENTITIES);
 export const newAdvertisers = a(NEW_ADVERTISERS);
+export const newPaidForBys = a(NEW_PAID_FOR_BYS)
 export const newTargets = a(NEW_TARGETS);
 export const newStates = a(NEW_STATES);
 export const newParties = a(NEW_PARTIES);
@@ -154,6 +156,7 @@ export const clearAllFilters = () => ({
 
 export const FILTER_ENTITY = "filter_entity";
 export const FILTER_ADVERTISER = "filter_advertiser";
+export const FILTER_PAID_FOR_BY = "filter_paid_for_by";
 export const FILTER_TARGET = "filter_target";
 export const FILTER_STATE = "filter_states";
 export const FILTER_BY_BY_STATE = "filter_by_by_state"; // this is for the combined state page: ads targeted TO the state, ads mentioning or by candidates in the state
@@ -161,6 +164,7 @@ export const FILTER_PARTY = "filter_parties";
 export const FILTER_DISTRICT = "filter_districts";
 export const filterEntity = a(FILTER_ENTITY);
 export const filterAdvertiser = a(FILTER_ADVERTISER);
+export const filterPaidForBy = a(FILTER_PAID_FOR_BY)
 export const filterTarget = a(FILTER_TARGET);
 export const filterState = a(FILTER_STATE);
 export const filterByByState = a(FILTER_BY_BY_STATE); // this is for the combined state page: ads targeted TO the state, ads mentioning or by candidates in the state
@@ -169,6 +173,7 @@ export const filterParty = a(FILTER_PARTY);
 export const filterDistrict = a(FILTER_DISTRICT);
 export const fetchEntity = e => asyncResetPage(filterEntity(e));
 export const fetchAdvertiser = a => asyncResetPage(filterAdvertiser(a));
+export const fetchPaidForBy = a => asyncResetPage(filterPaidForBy(a));
 export const fetchTarget = t => asyncResetPage(filterTarget(t));
 export const fetchState = e => asyncResetPage(filterState(e));
 export const fetchParty = a => asyncResetPage(filterParty(a));
@@ -176,6 +181,7 @@ export const fetchDistrict = t => asyncResetPage(filterDistrict(t));
 
 export const TOGGLE_TARGET = "toggle_target";
 export const TOGGLE_ADVERTISER = "toggle_advertiser";
+export const TOGGLE_PAID_FOR_BY = "toggle_paid_for_by";
 export const TOGGLE_ENTITY = "toggle_entity";
 export const RESET_DROPDOWNS = "reset_dropdowns";
 export const toggleTarget = () => ({ type: TOGGLE_TARGET });
@@ -448,6 +454,7 @@ export const getAds = (url = `${URL_ROOT}/fbpac-api/ads`) => {
               newAds(ads.ads),
               newEntities(ads.entities),
               newAdvertisers(ads.advertisers),
+              // newPaidForBys(ads.paid_for_bys),
               newTargets(ads.targets),
               setTotal(ads.total),
               setPage(parseInt(params.get("page"), 0) || 0)

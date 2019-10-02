@@ -10,18 +10,60 @@ const AdminTools = () => (
 
     <div className="tools-section">
       <h3>ads grouped by advertiser</h3>
-      <p>(e.g. ads from Bernie Sanders)</p>
+      <p>(e.g. ads from Bernie Sanders -- advertiser here is Facebook page)</p>
       <ul>
         <li>
           <Link to="/facebook-ads/admin/grouped/advertiser">all</Link>
         </li>
         <li>
           <Link to="/facebook-ads/admin/grouped/advertiser/this_month">
-            first submitted this month
+            seen this month
           </Link>
         </li>
         <li>
           <Link to="/facebook-ads/admin/grouped/advertiser/this_week">
+            seen this week
+          </Link>
+        </li>
+
+        <li>
+          <Link to="/facebook-ads/admin/grouped/advertiser/first_seen_this_month">
+            first submitted this month
+          </Link>
+        </li>
+        <li>
+          <Link to="/facebook-ads/admin/grouped/advertiser/first_seen_this_week">
+            first submitted this week
+          </Link>
+        </li>
+      </ul>
+    </div>
+
+    <div className="tools-section">
+      <h3>ads grouped by Paid For By</h3>
+      <p>(e.g. ads from Julian for the Future or Beto for America)</p>
+      <ul>
+        <li>
+          <Link to="/facebook-ads/admin/grouped/paid_for_by">all</Link>
+        </li>
+        <li>
+          <Link to="/facebook-ads/admin/grouped/paid_for_by/this_month">
+            seen this month
+          </Link>
+        </li>
+        <li>
+          <Link to="/facebook-ads/admin/grouped/paid_for_by/this_week">
+            seen this week
+          </Link>
+        </li>
+
+        <li>
+          <Link to="/facebook-ads/admin/grouped/paid_for_by/first_seen_this_month">
+            first submitted this month
+          </Link>
+        </li>
+        <li>
+          <Link to="/facebook-ads/admin/grouped/paid_for_by/first_seen_this_week">
             first submitted this week
           </Link>
         </li>
@@ -40,12 +82,22 @@ const AdminTools = () => (
         </li>
         <li>
           <Link to="/facebook-ads/admin/grouped/segment/this_month">
-            submitted this month
+            seen this month
           </Link>
         </li>
         <li>
           <Link to="/facebook-ads/admin/grouped/segment/this_week">
-            submitted this week
+            seen this week
+          </Link>
+        </li>
+        <li>
+          <Link to="/facebook-ads/admin/grouped/segment/first_seen_this_month">
+            first submitted this month
+          </Link>
+        </li>
+        <li>
+          <Link to="/facebook-ads/admin/grouped/segment/first_seen_this_week">
+            first submitted this week
           </Link>
         </li>
       </ul>
@@ -60,14 +112,27 @@ const AdminTools = () => (
         </li>
         <li>
           <Link to="/facebook-ads/admin/grouped/target/this_month">
-            submitted this month
+            seen this month
           </Link>
         </li>
         <li>
           <Link to="/facebook-ads/admin/grouped/target/this_week">
-            submitted this week
+            seen this week
           </Link>
         </li>
+
+        <li>
+          <Link to="/facebook-ads/admin/grouped/target/first_seen_this_month">
+            first submitted this month
+          </Link>
+        </li>
+        <li>
+          <Link to="/facebook-ads/admin/grouped/target/first_seen_this_week">
+            first submitted this week
+          </Link>
+        </li>
+
+
       </ul>
     </div>
 
