@@ -22,7 +22,6 @@ RUN USER=root cargo new --bin server
 WORKDIR /server
 ADD server/Cargo.toml /server/Cargo.toml
 ADD Cargo.lock /server/Cargo.lock
-RUN cargo build --release && rm src/*.rs
 
 # okay now we're back in business
 ADD server "/server"
