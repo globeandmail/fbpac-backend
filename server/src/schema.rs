@@ -1,6 +1,6 @@
 // $ diesel print-schema, then copy-paste it here.
 table! {
-    ads (id) {
+    fbpac_ads (id) {
         id -> Text,
         html -> Text,
         political -> Int4,

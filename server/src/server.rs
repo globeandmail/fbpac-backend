@@ -460,6 +460,7 @@ impl AdServer {
         let string = String::from_utf8(bytes.to_vec())?;
         let posts: Vec<AdPost> = serde_json::from_str(&string)?;
         let ads = posts.iter().map(move |post| {
+            println!("{:?}", post.targeting);
             let ad = NewAd::new(post, &lang)?.save(db_pool)?;
             Ok(ad)
         });

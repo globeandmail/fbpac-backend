@@ -12,7 +12,7 @@ use kuchiki::traits::*;
 use server::models::{get_advertiser, get_targets, Ad, get_targetedness_score};
 use server::targeting_parser::collect_targeting;
 use server::start_logging;
-use server::schema::ads::dsl::*;
+use server::schema::fbpac_ads::dsl::*;
 use std::env;
 use serde_json::Value;
 
@@ -44,7 +44,7 @@ fn main() {
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let conn = PgConnection::establish(&database_url).unwrap();
-    let dbads: Vec<Ad> = ads.order(created_at.desc())
+    let dbads: Vec<Ad> = fbpac_ads.order(created_at.desc())
         .filter(political_probability.gt(0.70))
         .filter(lang.eq("en-US"))
         .filter(not(suppressed.eq(true)))
@@ -108,7 +108,7 @@ fn main() {
             }
         }
 
-        diesel::update(ads.find(ad.id))
+        diesel::update(fbpac_ads.find(ad.id))
             .set((
                 targets.eq(get_all_targets(ad.targetings.clone())),
                 advertiser.eq(get_advertiser(&ad.targeting, &document)),
