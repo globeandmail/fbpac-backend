@@ -8,8 +8,8 @@ use diesel::prelude::*;
 use dotenv::dotenv;
 use kuchiki::traits::*;
 use server::models::{get_author_link, Ad};
-use server::schema::ads::*;
-use server::schema::ads::dsl::*;
+use server::schema::fbpac_ads::*;
+use server::schema::fbpac_ads::dsl::*;
 use server::start_logging;
 use std::env;
 
@@ -18,7 +18,7 @@ fn main() {
     start_logging();
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let conn = PgConnection::establish(&database_url).unwrap();
-    let dbads: Vec<Ad> = ads.order(created_at.desc())
+    let dbads: Vec<Ad> = fbpac_ads.order(created_at.desc())
         .filter(page.is_null())
         .load::<Ad>(&conn)
         .expect("Couldn't get ads.");
@@ -30,7 +30,7 @@ fn main() {
             .ok()
             .and_then(|l| l.attributes.borrow().get("href").map(|i| i.to_string()));
         if html_page.is_some() {
-            diesel::update(ads.find(ad.id))
+            diesel::update(fbpac_ads.find(ad.id))
                 .set(page.eq(html_page.unwrap()))
                 .execute(&conn)
                 .unwrap();

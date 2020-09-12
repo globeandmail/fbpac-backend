@@ -72,18 +72,18 @@ fn cleanup(ad: &mut Ad) -> bool {
 }
 
 fn main() {
-    use server::schema::ads::dsl::*;
+    use server::schema::fbpac_ads::dsl::*;
     dotenv().ok();
     start_logging();
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let conn = PgConnection::establish(&database_url).unwrap();
-    let dbads: Vec<Ad> = ads.order(created_at.desc()).load::<Ad>(&conn).unwrap();
+    let dbads: Vec<Ad> = fbpac_ads.order(created_at.desc()).load::<Ad>(&conn).unwrap();
     for mut ad in dbads {
         if cleanup(&mut ad) {
             let document = kuchiki::parse_html().one(ad.html.clone());
             println!("Cleaned {}", ad.id);
-            diesel::update(ads.find(ad.id.clone()))
+            diesel::update(fbpac_ads.find(ad.id.clone()))
                 .set((
                     html.eq(ad.html),
                     title.eq(get_title(&document).unwrap()),

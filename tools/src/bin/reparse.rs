@@ -21,7 +21,7 @@ use std::env;
 use tokio_core::reactor::Core;
 
 fn main() {
-    use server::schema::ads::dsl::*;
+    use server::schema::fbpac_ads::dsl::*;
     dotenv().ok();
     start_logging();
 
@@ -37,7 +37,7 @@ fn main() {
     let client = Client::configure()
         .connector(connector)
         .build(&core.handle());
-    let dbads: Vec<Ad> = ads.order(created_at.desc())
+    let dbads: Vec<Ad> = fbpac_ads.order(created_at.desc())
         .load::<Ad>(&*conn)
         .expect("Couldn't get ads");
 

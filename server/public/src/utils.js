@@ -6,10 +6,12 @@ import {
   setTotal,
   setPage,
   newAdvertisers,
+  newPaidForBys,
   newEntities,
   newSearch,
   newTargets,
   filterAdvertiser,
+  filterPaidForBy,
   filterEntity,
   filterTarget,
   newStates,
@@ -46,6 +48,7 @@ const serializeEntities = serializeToJSON("entities", "entity", entity => ({
   entity
 }));
 const serializeAdvertisers = serializeToJSON("advertisers", "advertiser");
+const serializePaidForBys = serializeToJSON("paid_for_bys", "paid_for_by");
 
 const serializeToArray = (plural, map) => {
   return (params, state) => {
@@ -72,6 +75,7 @@ const serialize = state => {
 
   params = [
     serializeAdvertisers,
+    serializePaidForBys,
     serializeEntities,
     serializeStates,
     serializeParties,
@@ -170,6 +174,19 @@ const deserialize = (dispatch, allowedLangs) => {
       actions.push(filterAdvertiser(advertiser));
     });
   }
+
+  if (params.has("paid_for_bys")) {
+    const paid_for_bys = JSON.parse(params.get("paid_for_bys")).map(
+      paid_for_by => ({
+        paid_for_by
+      })
+    );
+    actions.push(newPaidForBys(paid_for_bys));
+    paid_for_bys.map(paid_for_by => {
+      actions.push(filterPaidForBy(paid_for_by));
+    });
+  }
+
 
   if (params.has("page")) {
     actions.push(setTotal(10000));

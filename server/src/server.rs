@@ -14,7 +14,6 @@ use hyper::header::{AcceptLanguage, AccessControlAllowOrigin, Authorization, Bea
                     CacheDirective, Connection as HttpConnection, Location, ContentLength, ContentType, Vary};
 use hyper::mime;
 use hyper_tls::HttpsConnector;
-use jsonwebtoken::{decode, Validation};
 use models::{Ad, Advertisers, Aggregate, Entities, NewAd, Segments, Targets};
 use r2d2::Pool;
 use regex::Regex;
@@ -461,6 +460,7 @@ impl AdServer {
         let string = String::from_utf8(bytes.to_vec())?;
         let posts: Vec<AdPost> = serde_json::from_str(&string)?;
         let ads = posts.iter().map(move |post| {
+            println!("{:?}", post.targeting);
             let ad = NewAd::new(post, &lang)?.save(db_pool)?;
             Ok(ad)
         });

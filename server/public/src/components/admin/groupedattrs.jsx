@@ -13,6 +13,7 @@ import i18next from "i18next";
 const groupedAttrUrl = {
   target: ({ target }) => `targets=%5B%7B"target"%3A"${target}"%7D%5D`,
   advertiser: ({ advertiser }) => `advertisers=${JSON.stringify([advertiser])}`,
+  paid_for_by: ({ paid_for_by }) => `paid_for_bys=${JSON.stringify([paid_for_by])}`,
   segment: ({ segment }) => {
     if (segment === "List → " || segment === "Like  → ") {
       return `targets=%5B%7B"target"%3A"${segment.slice(0, 4)}"%7D%5D`;
@@ -70,7 +71,7 @@ export class GroupedAttrsUnconnected extends React.Component {
                       this.state.groupingType
                     ](groupedItem)}&lang=${this.props.lang}`}
                   >
-                    {groupedItem[this.state.groupingType]}
+                    {groupedItem[this.state.groupingType] || '(null)'}
                   </Link>
                 </td>
                 <td>{groupedItem.count}</td>

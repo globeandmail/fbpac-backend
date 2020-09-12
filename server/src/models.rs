@@ -22,8 +22,8 @@ use kuchiki::traits::*;
 use r2d2::Pool;
 use rusoto_core::Region;
 use rusoto_s3::{PutObjectRequest, S3, S3Client};
-use schema::ads;
-use schema::ads::BoxedQuery;
+use schema::fbpac_ads;
+use schema::fbpac_ads::BoxedQuery;
 use serde_json;
 use serde_json::Value;
 use server::AdPost;
@@ -34,6 +34,7 @@ use url::{ParseError, Url};
 
 const DEFAULT_S3_BUCKET_NAME : &'static str = "pp-facebook-ads";
 const S3_BUCKET_NAME: Option<&'static str> = option_env!("S3_BUCKET_NAME");
+const S3_REGION : Region = Region::UsEast1;
 
 pub fn document_select(
     document: &kuchiki::NodeRef,
@@ -138,7 +139,7 @@ fn get_real_image_uri(uri: Uri) -> Uri {
 }
 
 #[derive(AsChangeset, Debug)]
-#[table_name = "ads"]
+#[table_name = "fbpac_ads"]
 pub struct Images {
     thumbnail: Option<String>,
     images: Vec<String>,
@@ -228,7 +229,7 @@ pub trait Aggregate<T: Queryable<(BigInt, Text), Pg>> {
         // uncomment to use PgInterval
         // use diesel::dsl::now;
         // use diesel::pg::expression::extensions::IntervalDsl;
-        // use schema::ads::columns::created_at;
+        // use schema::fbpac_ads::columns::created_at;
         let connection = conn.get()?;
 
         let query = agg!(match interval {
@@ -407,7 +408,7 @@ impl Ad {
                     // running roughshod over old ad code and deleting images that were still stored
                     // at ProPublica's bucket, so adding PP to the matching condition
                     // old code was: // Some(h) => (h == s3hostname2 || h.ends_with("fbcdn.net")),
-                    Some(h) => (h == s3hostname2 || h.ends_with("fbcdn.net") || h == "pp-facebook-ads.s3.amazonaws.com".to_owned()),
+                    Some(h) => (h == s3hostname2 || h.ends_with("fbcdn.net") || h == "pp-facebook-ads.s3.amazonaws.com".to_owned()  || h == "qz-aistudio-fbpac-ads.s3.amazonaws.com".to_owned()),
                     None => false
                 }
             })
@@ -425,7 +426,7 @@ impl Ad {
             // upload them to s3
             .and_then(move |tuple| {
                     if tuple.1.host().unwrap_or_default() != s3hostname {
-                        let client = S3Client::simple(Region::UsEast1);
+                        let client = S3Client::simple(S3_REGION);
                         let req = PutObjectRequest {
                             bucket: S3_BUCKET_NAME.unwrap_or(DEFAULT_S3_BUCKET_NAME).to_string(),
                             key: tuple.1.path().trim_left_matches('/').to_string(),
@@ -447,10 +448,10 @@ impl Ad {
             .and_then(move |images| {
                 let imgs = images.clone();
                 pool_db.spawn_fn(move || {
-                    use schema::ads::dsl::*;
+                    use schema::fbpac_ads::dsl::*;
                     let update = Images::from_ad(&ad, &imgs)?;
                     let connection = db.get()?;
-                    diesel::update(ads.find(&ad.id))
+                    diesel::update(fbpac_ads.find(&ad.id))
                         .set(&update)
                         .execute(&*connection)?;
                     info!("saved {:?}", ad.id);
@@ -474,8 +475,8 @@ impl Ad {
     }
 
     pub fn scoped<'a>(language: &'a str) -> BoxedQuery<'a, Pg> {
-        use schema::ads::dsl::*;
-        ads.filter(lang.eq(language))
+        use schema::fbpac_ads::dsl::*;
+        fbpac_ads.filter(lang.eq(language))
             .filter(political_probability.gt(0.70))
             .filter(suppressed.eq(false))
             .into_boxed()
@@ -497,7 +498,7 @@ impl Ad {
         language: &'a str,
         options: &'a HashMap<String, String>,
     ) -> BoxedQuery<'a, Pg> {
-        use schema::ads::dsl::*;
+        use schema::fbpac_ads::dsl::*;
         let mut query = Ad::scoped(language);
 
         if let Some(search) = options.get("search") {
@@ -543,7 +544,7 @@ impl Ad {
         conn: &Pool<ConnectionManager<PgConnection>>,
         options: &HashMap<String, String>,
     ) -> Result<Vec<Ad>> {
-        use schema::ads::dsl::*;
+        use schema::fbpac_ads::dsl::*;
         let connection = conn.get()?;
         let mut query = Ad::search_query(language, options);
 
@@ -568,7 +569,7 @@ impl Ad {
         conn: &Pool<ConnectionManager<PgConnection>>,
         id: String,
     ) -> Result<Option<Ad>> {
-        use schema::ads::dsl::id as db_id;
+        use schema::fbpac_ads::dsl::id as db_id;
         let connection = conn.get()?;
         let query = Ad::scoped(language);
         info!("Getting from db {}", id);
@@ -582,12 +583,12 @@ impl Ad {
     }
 
     pub fn suppress(adid: String, conn: &Pool<ConnectionManager<PgConnection>>) -> Result<()> {
-        use schema::ads::dsl::*;
+        use schema::fbpac_ads::dsl::*;
         let connection = conn.get()?;
         {
             warn!("Suppressed {:?}", adid);
         }
-        diesel::update(ads.filter(id.eq(adid)))
+        diesel::update(fbpac_ads.filter(id.eq(adid)))
             .set(suppressed.eq(true))
             .execute(&connection)?;
         Ok(())
@@ -666,7 +667,7 @@ pub fn get_advertiser(targeting: &Option<String>, document: &kuchiki::NodeRef) -
 }
 
 #[derive(Insertable, Debug)]
-#[table_name = "ads"]
+#[table_name = "fbpac_ads"]
 pub struct NewAd<'a> {
     pub id: &'a str,
     html: &'a str,
@@ -729,12 +730,12 @@ impl<'a> NewAd<'a> {
     }
 
     pub fn save(&self, pool: &Pool<ConnectionManager<PgConnection>>) -> Result<Ad> {
-        use schema::ads;
-        use schema::ads::dsl;
+        use schema::fbpac_ads;
+        use schema::fbpac_ads::dsl;
         let connection = pool.get()?;
         // increment impressions if this is a background save,
         // otherwise increment political counters
-        let saved_ad: Ad = diesel::insert_into(ads::table)
+        let saved_ad: Ad = diesel::insert_into(fbpac_ads::table)
             .values(self)
             .on_conflict(dsl::id)
             .do_update()
@@ -749,7 +750,7 @@ impl<'a> NewAd<'a> {
         // overwrite the old targeting/targets if the old one was empty.
         if self.targeting.is_some() && !saved_ad.targeting.is_some() {
             let new_targets = get_targets(&saved_ad.targeting.clone());
-            diesel::update(ads::table.find(self.id))
+            diesel::update(fbpac_ads::table.find(self.id))
                 .set((
                     dsl::targeting.eq(&self.targeting),
                     dsl::targets.eq(new_targets.clone()),
@@ -759,7 +760,7 @@ impl<'a> NewAd<'a> {
         };
 
         if self.targeting.is_some() && saved_ad.created_at != saved_ad.updated_at {
-            diesel::update(ads::table.find(self.id))
+            diesel::update(fbpac_ads::table.find(self.id))
                 .set((
                     dsl::targetings.eq(
                         self.targeting.clone().map_or(None, |targ| {

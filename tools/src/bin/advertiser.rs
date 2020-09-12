@@ -8,8 +8,8 @@ use diesel::prelude::*;
 use dotenv::dotenv;
 use kuchiki::traits::*;
 use server::models::{get_author_link, Ad};
-use server::schema::ads::*;
-use server::schema::ads::dsl::*;
+use server::schema::fbpac_ads::*;
+use server::schema::fbpac_ads::dsl::*;
 use server::start_logging;
 use std::env;
 use server::targeting_parser::{collect_advertiser, collect_targeting, Targeting};
@@ -33,7 +33,7 @@ fn main() {
     start_logging();
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let conn = PgConnection::establish(&database_url).unwrap();
-    let dbads: Vec<Ad> = ads.order(created_at.desc())
+    let dbads: Vec<Ad> = fbpac_ads.order(created_at.desc())
         .filter(advertiser.is_null())
         .load::<Ad>(&conn)
         .expect("Couldn't get ads.");
@@ -43,7 +43,7 @@ fn main() {
         let advertiser_name = get_advertiser(&ad.targeting, &document);
         if advertiser_name.is_some() {
             println!("found advertiser for {:?} {:?}", ad.id, advertiser_name.clone().unwrap());
-            diesel::update(ads.find(ad.id))
+            diesel::update(fbpac_ads.find(ad.id))
                 .set(advertiser.eq(advertiser_name.unwrap()))
                 .execute(&conn)
                 .unwrap();

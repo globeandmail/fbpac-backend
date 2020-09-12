@@ -6,6 +6,7 @@ import {
   HIDE_AD,
   TOGGLE_TARGET,
   TOGGLE_ADVERTISER,
+  TOGGLE_PAID_FOR_BY,
   TOGGLE_ENTITY,
   RESET_DROPDOWNS,
   NEXT_PAGE,
@@ -168,6 +169,8 @@ export const filters = (state = {}, action) => {
       return { ...state, target: !state.target };
     case TOGGLE_ADVERTISER:
       return { ...state, advertiser: !state.advertiser };
+    case TOGGLE_PAID_FOR_BY:
+      return { ...state, paid_for_by: !state.paid_for_by };
     case TOGGLE_ENTITY:
       return { ...state, entity: !state.entity };
     case RESET_DROPDOWNS:
@@ -240,6 +243,7 @@ const makeArrayReducer = plural => {
 
 export const entities = makeObjectReducer("entities", "entity");
 export const advertisers = makeObjectReducer("advertisers", "advertiser");
+export const paid_for_bys = makeObjectReducer("paid_for_bys", "paid_for_by");
 export const targets = makeObjectReducer("targets", "target");
 export const states = makeArrayReducer("states");
 export const parties = makeArrayReducer("parties");
